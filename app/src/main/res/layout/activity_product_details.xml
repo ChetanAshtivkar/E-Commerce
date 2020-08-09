@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ecommerce.ui.product_details.ProductDetailsViewModel" />
+
+        <variable
+            name="product"
+            type="com.ecommerce.data.models.Product" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.product_details.ProductDetailsActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@{product.name}" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_bar_layout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:set_picture="@{product.imageUrl}" />
+
+                <TextView
+                    android:id="@+id/text_product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin"
+                    android:layout_marginTop="@dimen/vertical_margin_half"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{product.name}"
+                    android:textSize="@dimen/text_header_3"
+                    app:layout_constraintStart_toStartOf="@id/product_image"
+                    app:layout_constraintTop_toBottomOf="@+id/product_image" />
+
+                <TextView
+                    android:id="@+id/text_product_id"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/vertical_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_header_4"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/text_product_name"
+                    app:layout_constraintEnd_toEndOf="@+id/product_image"
+                    app:layout_constraintStart_toEndOf="@id/text_product_name"
+                    app:layout_constraintTop_toBottomOf="@+id/product_image"
+                    app:set_product_id="@{product.id}" />
+
+                <TextView
+                    android:id="@+id/text_product_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin"
+                    android:layout_marginTop="@dimen/vertical_margin_half"
+                    android:layout_marginEnd="@dimen/vertical_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_header_4"
+                    app:layout_constraintEnd_toEndOf="@id/product_image"
+                    app:layout_constraintStart_toStartOf="@+id/product_image"
+                    app:layout_constraintTop_toBottomOf="@+id/text_product_id"
+                    app:set_price="@{product.price}" />
+
+                <TextView
+                    android:id="@+id/text_product_category_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin"
+                    android:layout_marginTop="@dimen/vertical_margin_half"
+                    android:layout_marginEnd="@dimen/vertical_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{product.categoryName}"
+                    android:textSize="@dimen/text_header_5"
+                    app:layout_constraintEnd_toEndOf="@+id/product_image"
+                    app:layout_constraintStart_toStartOf="@id/product_image"
+                    app:layout_constraintTop_toBottomOf="@+id/text_product_price" />
+
+                <TextView
+                    android:id="@+id/text_product_size"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin"
+                    android:layout_marginTop="@dimen/vertical_margin_half"
+                    android:layout_marginEnd="@dimen/vertical_margin_half"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_header_5"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="@id/product_image"
+                    app:layout_constraintTop_toBottomOf="@id/text_product_category_name"
+                    app:set_size="@{product.size}" />
+
+                <TextView
+                    android:id="@+id/text_product_quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin_half"
+                    android:layout_marginEnd="@dimen/vertical_margin"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/text_header_5"
+                    app:layout_constraintEnd_toEndOf="@+id/product_image"
+                    app:layout_constraintStart_toEndOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="@+id/text_product_size"
+                    app:set_quantity="@{product.quantityAvailable}" />
+
+                <TextView
+                    android:id="@+id/text_product_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/vertical_margin"
+                    android:layout_marginTop="@dimen/vertical_margin_half"
+                    android:layout_marginEnd="@dimen/vertical_margin"
+                    android:ellipsize="end"
+                    android:text="@{product.description}"
+                    android:textSize="@dimen/text_header_6"
+                    app:layout_constraintEnd_toEndOf="@+id/product_image"
+                    app:layout_constraintStart_toStartOf="@id/product_image"
+                    app:layout_constraintTop_toBottomOf="@+id/text_product_size" />
+
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/progress_bar"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

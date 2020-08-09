@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">eCommerce</string>
+    <string name="try_again">Try again</string>
+    <string name="error">Error!</string>
+    <string name="sort_by">Sort By</string>
+    <string name="text_a">A</string>
+    <string name="text_b">B</string>
+    <string name="text_c">C</string>
+</resources>

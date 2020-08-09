@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="list_image_width">100dp</dimen>
+    <dimen name="list_image_height">100dp</dimen>
+    <dimen name="vertical_margin_half">8dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="vertical_margin_double">32dp</dimen>
+    <dimen name="text_header_3">32sp</dimen>
+    <dimen name="text_header_4">24sp</dimen>
+    <dimen name="text_header_5">20sp</dimen>
+    <dimen name="text_header_6">16sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_sub_header">12sp</dimen>
+    <dimen name="sort_bar_height">48dp</dimen>
+</resources>
