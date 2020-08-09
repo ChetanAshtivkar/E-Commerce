@@ -39,11 +39,11 @@ class ProductDetailsActivity : BaseActivity() {
         binding.lifecycleOwner = this
 
         intent.extras?.let {
-            setObservers(it.getInt(BUNDLE_PRODUCT_ID))
+            getDetails(it.getInt(BUNDLE_PRODUCT_ID))
         }
     }
 
-    private fun setObservers(productId: Int) {
+    private fun getDetails(productId: Int) {
         viewModel.getProductDetails(productId).observe(this@ProductDetailsActivity, Observer {
             it.let { response ->
                 when (response.status) {
@@ -58,12 +58,12 @@ class ProductDetailsActivity : BaseActivity() {
 
                     Status.FAILURE -> {
                         binding.progressBar.hide()
-                        val snackbar: Snackbar = Snackbar
+                        val snackBar: Snackbar = Snackbar
                             .make(binding.root, getString(R.string.error), Snackbar.LENGTH_LONG)
                             .setAction(
                                 getString(R.string.try_again)
-                            ) { viewModel.getProductDetails(productId) }
-                        snackbar.show()
+                            ) { getDetails(productId) }
+                        snackBar.show()
                     }
                 }
             }
