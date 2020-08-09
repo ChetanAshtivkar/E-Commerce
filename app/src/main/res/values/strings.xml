@@ -19,4 +19,5 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="text_wip">Work in Progress</string>
+    <string name="title_activity_w_i_p">WIPActivity</string>
 </resources>

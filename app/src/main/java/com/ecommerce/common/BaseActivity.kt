@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
  * Created by Chetan on 08/08/20.
  */
 const val BUNDLE_PRODUCT_ID = "com.ecommerce.BUNDLE_PRODUCT_ID"
+const val BUNDLE_ACTIVITY_NAME = "com.ecommerce.BUNDLE_ACTIVITY_NAME"
 
 open class BaseActivity : AppCompatActivity() {
 

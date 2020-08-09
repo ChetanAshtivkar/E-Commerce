@@ -5,6 +5,8 @@
     <dimen name="vertical_margin_half">8dp</dimen>
     <dimen name="vertical_margin">16dp</dimen>
     <dimen name="vertical_margin_double">32dp</dimen>
+    <dimen name="text_header_1">48sp</dimen>
+    <dimen name="text_header_2">40sp</dimen>
     <dimen name="text_header_3">32sp</dimen>
     <dimen name="text_header_4">24sp</dimen>
     <dimen name="text_header_5">20sp</dimen>

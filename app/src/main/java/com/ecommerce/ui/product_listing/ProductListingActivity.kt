@@ -12,20 +12,23 @@ import androidx.lifecycle.ViewModelProvider
 import com.ecommerce.R
 import com.ecommerce.adapter.ProductListAdapter
 import com.ecommerce.adapter.ProductListener
+import com.ecommerce.common.BUNDLE_ACTIVITY_NAME
 import com.ecommerce.common.BUNDLE_PRODUCT_ID
 import com.ecommerce.common.BaseActivity
 import com.ecommerce.data.models.Product
 import com.ecommerce.data.network.RetrofitFactory
 import com.ecommerce.data.network.Status
 import com.ecommerce.databinding.ActivityProductListingBinding
+import com.ecommerce.ui.WIPActivity
 import com.ecommerce.ui.product_details.ProductDetailsActivity
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 /**
  * Created by Chetan on 08/08/20.
  */
-class ProductListingActivity : BaseActivity() {
+class ProductListingActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityProductListingBinding
     private lateinit var viewModel: ProductListingViewModel
@@ -57,13 +60,11 @@ class ProductListingActivity : BaseActivity() {
     }
 
     private fun setupDrawer() {
-
         val drawerToggle =
             ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(drawerToggle)
         drawerToggle.syncState()
-
-
+        binding.navView.setNavigationItemSelectedListener(this)
     }
 
     private fun setSortButtons() {
@@ -176,19 +177,6 @@ class ProductListingActivity : BaseActivity() {
                 binding.drawerLayout.openDrawer(GravityCompat.START)
                 true
             }
-            R.id.nav_my_account -> {
-                return true
-            }
-            R.id.nav_offers -> {
-                return true
-            }
-            R.id.nav_my_orders -> {
-                return true
-            }
-            R.id.nav_logout -> {
-                Toast.makeText(this, getString(R.string.text_wip), Toast.LENGTH_LONG).show()
-                return true
-            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -198,6 +186,43 @@ class ProductListingActivity : BaseActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.nav_my_account -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(this, WIPActivity::class.java)
+                intent.putExtra(BUNDLE_ACTIVITY_NAME, getString(R.string.menu_my_account))
+                startActivity(intent)
+                return true
+            }
+            R.id.nav_offers -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(this, WIPActivity::class.java)
+                intent.putExtra(BUNDLE_ACTIVITY_NAME, getString(R.string.menu_my_account))
+                startActivity(intent)
+                return true
+            }
+            R.id.nav_my_orders -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                val intent = Intent(this, WIPActivity::class.java)
+                intent.putExtra(BUNDLE_ACTIVITY_NAME, getString(R.string.menu_my_account))
+                startActivity(intent)
+                return true
+            }
+            R.id.nav_logout -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                Toast.makeText(this, getString(R.string.text_wip), Toast.LENGTH_LONG).show()
+                return true
+            }
+            else -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+                return true
+            }
+
         }
     }
 }
