@@ -2,6 +2,10 @@ package com.ecommerce.ui.product_listing
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +22,6 @@ import com.ecommerce.ui.product_details.ProductDetailsActivity
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-
 /**
  * Created by Chetan on 08/08/20.
  */
@@ -32,6 +35,8 @@ class ProductListingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_product_listing)
+        setSupportActionBar(binding.appBarLayout.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProvider(
             this,
@@ -41,17 +46,28 @@ class ProductListingActivity : BaseActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.swipeToRefresh.setOnRefreshListener {
+        binding.appBarLayout.contentMain.swipeToRefresh.setOnRefreshListener {
             getProducts()
         }
 
+        setupDrawer()
         setRecyclerViewAdapter()
         getProducts()
         setSortButtons()
     }
 
+    private fun setupDrawer() {
+
+        val drawerToggle =
+            ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
+        binding.drawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
+
+    }
+
     private fun setSortButtons() {
-        binding.sortByA.setOnCheckedChangeListener { p0, checked ->
+        binding.appBarLayout.contentMain.sortByA.setOnCheckedChangeListener { _, checked ->
             productList.sortWith(kotlin.Comparator { lhs, rhs ->
                 if (checked) {
                     when {
@@ -70,7 +86,7 @@ class ProductListingActivity : BaseActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        binding.sortByB.setOnCheckedChangeListener { p0, checked ->
+        binding.appBarLayout.contentMain.sortByB.setOnCheckedChangeListener { _, checked ->
             productList.sortWith(kotlin.Comparator { lhs, rhs ->
                 if (checked) {
                     when {
@@ -89,7 +105,7 @@ class ProductListingActivity : BaseActivity() {
             adapter.notifyDataSetChanged()
         }
 
-        binding.sortByC.setOnCheckedChangeListener { p0, checked ->
+        binding.appBarLayout.contentMain.sortByC.setOnCheckedChangeListener { _, checked ->
             productList.sortWith(kotlin.Comparator { lhs, rhs ->
                 if (checked) {
                     when {
@@ -110,7 +126,7 @@ class ProductListingActivity : BaseActivity() {
     }
 
     private fun setRecyclerViewAdapter() {
-        adapter = ProductListAdapter(productList, ProductListener { product, position ->
+        adapter = ProductListAdapter(productList, ProductListener { product, _ ->
             val bundle = Bundle()
             bundle.putSerializable(BUNDLE_PRODUCT_ID, product.id)
             val intent = Intent(this, ProductDetailsActivity::class.java)
@@ -118,7 +134,7 @@ class ProductListingActivity : BaseActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.slide_out, R.anim.slide_in);
         })
-        binding.productList.adapter = adapter
+        binding.appBarLayout.contentMain.productList.adapter = adapter
     }
 
     private fun getProducts() {
@@ -126,20 +142,20 @@ class ProductListingActivity : BaseActivity() {
             it.let { response ->
                 when (response.status) {
                     Status.LOADING -> {
-                        binding.progressBar.show()
+                        binding.appBarLayout.contentMain.progressBar.show()
                     }
 
                     Status.SUCCESS -> {
-                        binding.progressBar.hide()
-                        binding.swipeToRefresh.isRefreshing = false
+                        binding.appBarLayout.contentMain.progressBar.hide()
+                        binding.appBarLayout.contentMain.swipeToRefresh.isRefreshing = false
                         productList.clear()
                         response.apiResponse?.data?.let { list -> productList.addAll(list) }
                         adapter.notifyDataSetChanged()
                     }
 
                     Status.FAILURE -> {
-                        binding.progressBar.hide()
-                        binding.swipeToRefresh.isRefreshing = false
+                        binding.appBarLayout.contentMain.progressBar.hide()
+                        binding.appBarLayout.contentMain.swipeToRefresh.isRefreshing = false
                         val snackBar: Snackbar = Snackbar
                             .make(binding.root, getString(R.string.error), Snackbar.LENGTH_LONG)
                             .setAction(
@@ -152,5 +168,36 @@ class ProductListingActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+                true
+            }
+            R.id.nav_my_account -> {
+                return true
+            }
+            R.id.nav_offers -> {
+                return true
+            }
+            R.id.nav_my_orders -> {
+                return true
+            }
+            R.id.nav_logout -> {
+                Toast.makeText(this, getString(R.string.text_wip), Toast.LENGTH_LONG).show()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }

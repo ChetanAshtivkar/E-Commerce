@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/app_bar_main">
+
+        <View
+            android:id="@+id/sort_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sort_bar_height"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_sort"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/sort_by"
+            android:textSize="@dimen/text_header_6"
+            app:layout_constraintBottom_toBottomOf="@id/sort_bar"
+            app:layout_constraintEnd_toStartOf="@+id/sort_by_a"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@id/sort_bar"
+            app:layout_constraintTop_toTopOf="@+id/sort_bar" />
+
+        <ToggleButton
+            android:id="@+id/sort_by_a"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textOff="@string/text_a"
+            android:textOn="@string/text_a"
+            app:layout_constraintBottom_toBottomOf="@id/sort_bar"
+            app:layout_constraintEnd_toStartOf="@+id/sort_by_b"
+            app:layout_constraintStart_toEndOf="@id/text_sort"
+            app:layout_constraintTop_toTopOf="@+id/sort_bar" />
+
+        <ToggleButton
+            android:id="@+id/sort_by_b"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textOff="@string/text_b"
+            android:textOn="@string/text_b"
+            app:layout_constraintBottom_toBottomOf="@id/sort_bar"
+            app:layout_constraintEnd_toStartOf="@+id/sort_by_c"
+            app:layout_constraintStart_toEndOf="@id/sort_by_a"
+            app:layout_constraintTop_toTopOf="@+id/sort_bar" />
+
+        <ToggleButton
+            android:id="@+id/sort_by_c"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:textOff="@string/text_c"
+            android:textOn="@string/text_c"
+            app:layout_constraintBottom_toBottomOf="@id/sort_bar"
+            app:layout_constraintEnd_toEndOf="@id/sort_bar"
+            app:layout_constraintStart_toEndOf="@id/sort_by_b"
+            app:layout_constraintTop_toTopOf="@+id/sort_bar" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_to_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sort_bar">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/product_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="40"
+                tools:listitem="@layout/list_item_product" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
